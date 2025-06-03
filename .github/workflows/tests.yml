@@ -25,6 +25,10 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
+      - name: Start MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
