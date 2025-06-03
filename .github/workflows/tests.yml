@@ -21,7 +21,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: testing
           MYSQL_USER: root
-          MYSQL_PASSWORD: password
+          MYSQL_PASSWORD: 
         ports:
           - 3307:3306
         options: --health-cmd="mysqladmin ping -uroot -ppassword" --health-interval=10s --health-timeout=5s --health-retries=10
@@ -32,7 +32,7 @@ jobs:
       DB_PORT: 3306
       DB_DATABASE: testing
       DB_USERNAME: root
-      DB_PASSWORD: password
+      DB_PASSWORD: 
 
     steps:
       - name: Checkout
