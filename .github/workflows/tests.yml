@@ -43,11 +43,14 @@ jobs:
       - name: Copy Environment File
         run: cp .env.example .env
 
+      - name: Launch Sail
+        run: ./vendor/bin/sail up -d
+
       - name: Generate Application Key
-        run: php artisan key:generate
+        run: ./vendor/bin/sail artisan key:generate
       
       - name: Run Migrations
-        run: php artisan migrate
+        run: ./vendor/bin/sail artisan migrate
 
       - name: Tests
-        run: php artisan test
+        run: ./vendor/bin/sail artisan test
