@@ -14,26 +14,6 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql/mysql-server:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: testing
-          MYSQL_USER: root
-          MYSQL_PASSWORD: 
-        ports:
-          - 3307:3306
-        options: --health-cmd="mysqladmin ping -uroot -ppassword" --health-interval=10s --health-timeout=5s --health-retries=10
-
-    env:
-      DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: testing
-      DB_USERNAME: root
-      DB_PASSWORD: password
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,6 +25,19 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Debug
+        run: |
+          php --version
+          composer --version
+          node --version
+          npm --version
+
       - name: Install Node Dependencies
         run: npm ci
 
@@ -53,22 +46,20 @@ jobs:
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      
+      - name: Setup Environment
+        run: |
+          touch ./storage/logs/laravel.log
+          touch ./database/database.sqlite
 
       - name: Copy Environment File
         run: cp .env.example .env
 
-      - name: Start Sail
-        run: |
-          ./vendor/bin/sail up -d
-
       - name: Generate Application Key
-        run: |
-          ./vendor/bin/sail artisan key:generate
+        run: php artisan key:generate
+      
+      - name: Migrate Database
+        run: php artisan migrate --force
 
-      - name: Set Up Database
-        run: |
-          ./vendor/bin/sail artisan migrate --seed
-          
-      - name: Execute tests
-        run: |
-          ./vendor/bin/sail test
+      - name: Tests
+        run: ./vendor/bin/phpunit
