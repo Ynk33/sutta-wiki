@@ -50,7 +50,7 @@ jobs:
       - name: Setup Environment
         run: |
           touch ./storage/logs/laravel.log
-          touch ./database/testing.sqlite
+          touch ./database/database.sqlite
 
       - name: Copy Environment File
         run: cp .env.example .env
