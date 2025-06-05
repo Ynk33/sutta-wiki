@@ -1,5 +1,7 @@
+import H1 from "@/components/ui/h1";
 import { Entry } from "@/types";
 import { Head } from "@inertiajs/react";
+import Markdown from "@/lib/Markdown";
 
 export default function Home({ latestEntries }: { latestEntries: Entry[] }) {
 
@@ -10,8 +12,11 @@ export default function Home({ latestEntries }: { latestEntries: Entry[] }) {
                 <div className="flex w-full lg:grow">
                     {latestEntries.map(entry => (
                         <div key={entry.id} className="p-4 border rounded-lg m-2">
-                            <h2 className="text-lg font-bold">{entry.name}</h2>
-                            <p>{entry.description}</p>
+                            <H1>{entry.name}</H1>
+
+                            <Markdown>
+                                {entry.content}
+                            </Markdown>
                         </div>
                     ))}
                 </div>
