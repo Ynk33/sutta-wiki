@@ -1,7 +1,7 @@
-import H1 from "@/components/ui/h1";
+import H1 from "@/components/html/h1";
 import { Entry } from "@/types";
 import { Head } from "@inertiajs/react";
-import Markdown from "@/lib/Markdown";
+import Markdown from "@/lib/markdown";
 
 export default function Home({ latestEntries }: { latestEntries: Entry[] }) {
 

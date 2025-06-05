@@ -1,4 +1,4 @@
-import H1 from "@/components/ui/h1";
+import H1 from "@/components/html/h1";
 import React from "react";
 import { Components } from "react-markdown";
 
