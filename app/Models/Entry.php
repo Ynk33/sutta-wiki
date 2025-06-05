@@ -25,7 +25,7 @@ class Entry extends Model
     /**
      * The other entries that are linked to this entry.
      */
-    public function blue_links(): HasMany
+    public function blueLinks(): HasMany
     {
         return $this->hasMany(Entry::class, 'entry_links', 'entry_id', 'linked_entry_id');
     }
@@ -33,7 +33,7 @@ class Entry extends Model
     /**
      * The entries that link to this entry.
      */
-    public function referenced_by(): BelongsToMany
+    public function referencedBy(): BelongsToMany
     {
         return $this->belongsToMany(Entry::class, 'entry_links', 'linked_entry_id', 'entry_id');
     }
